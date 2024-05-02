@@ -7,6 +7,7 @@ import cliente.callback.ControladorCallbackInt;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
+import servidor.DTO.UsuarioEntradaSalidaDTO;
 
 public class ControladorGestorReferenciasRemotasAdministradorImpl extends UnicastRemoteObject implements ControladorGestorReferenciasRemotasAdministradorInt{
     
@@ -22,11 +23,11 @@ public class ControladorGestorReferenciasRemotasAdministradorImpl extends Unicas
         return this.referencias.add(referencia);
     }
     
-    public void notificar(EventoDTO objEvento){
+    public void notificar(EventoDTO objEvento, UsuarioEntradaSalidaDTO objUsuarioDTO){
         referencias.forEach(
         ref-> {
             try {
-                ref.notificar(objEvento);
+                ref.notificar(objEvento, objUsuarioDTO);
             } catch (RemoteException ex) {
                 System.out.println("Administrador no existe");
             }

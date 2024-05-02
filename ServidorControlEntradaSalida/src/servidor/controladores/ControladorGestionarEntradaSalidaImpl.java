@@ -3,6 +3,7 @@ package servidor.controladores;
 import cliente.DTO.EventoDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import servidor.DTO.UsuarioEntradaSalidaDTO;
 import servidor.Repositorios.EntradasRepositoryInt;
 
 public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject implements ControladorGestionarEntradaSalidaInt{
@@ -27,8 +28,9 @@ public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject i
         System.out.println("Verificando identificación: " + identificacion + "...");
         int codigo = 0;
         EventoDTO objEventoDTO = null;
+        UsuarioEntradaSalidaDTO objUsuarioDTO = objRemotoServidorUsuarios.consultarUsuarioEntradaSalida(identificacion);
         
-        if (objRemotoServidorUsuarios.consultarUsuarioEntradaSalida(identificacion) == null) {
+        if (objUsuarioDTO == null) {
             codigo = 1;
             objEventoDTO = new EventoDTO("Entrada no exitosa, el usuario "+identificacion+" no existe", "Entrada");
         }
@@ -44,7 +46,7 @@ public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject i
                 objEventoDTO = new EventoDTO("Entrada exitosa del usuario "+identificacion, "Entrada");
             }            
         }
-        this.objRemoto2.notificar(objEventoDTO);
+        this.objRemoto2.notificar(objEventoDTO, objUsuarioDTO);
         return codigo;
     }
 
@@ -54,7 +56,9 @@ public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject i
         int codigo = 0;
         EventoDTO objEventoDTO = null;
         
-        if (objRemotoServidorUsuarios.consultarUsuarioEntradaSalida(identificacion) == null) {
+        UsuarioEntradaSalidaDTO objUsuarioDTO = objRemotoServidorUsuarios.consultarUsuarioEntradaSalida(identificacion);
+        
+        if (objUsuarioDTO == null) {
             codigo = 1;
             objEventoDTO = new EventoDTO("Salida no exitosa, el usuario "+identificacion+" no existe", "Salida");
         }
@@ -70,7 +74,7 @@ public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject i
                 codigo = 3;
             }            
         }
-        this.objRemoto2.notificar(objEventoDTO);
+        this.objRemoto2.notificar(objEventoDTO, objUsuarioDTO);
         return codigo;
     }    
     

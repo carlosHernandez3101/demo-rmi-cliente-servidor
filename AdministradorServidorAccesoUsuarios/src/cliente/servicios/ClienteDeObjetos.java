@@ -5,6 +5,7 @@ import cliente.utilidades.UtilidadesRegistroC;
 import cliente.vista.Menu;
 import java.rmi.RemoteException;
 import servidor.DTO.LoginDTO;
+import servidor.controladores.ControladorGestorCredencialesUsuariosInt;
 import servidor.controladores.ControladorGestorReferenciasRemotasAdministradorInt;
 import servidor.controladores.ControladorGestorUsuariosEntradaSalidaInt;
 
@@ -12,6 +13,7 @@ public class ClienteDeObjetos {
 
     private static ControladorGestorUsuariosEntradaSalidaInt objRemoto1;
     private static ControladorGestorReferenciasRemotasAdministradorInt objRemoto2;
+    private static ControladorGestorCredencialesUsuariosInt objRemoto3;
 
     public static void main(String[] args) {
         try {
@@ -33,11 +35,35 @@ public class ClienteDeObjetos {
                     direccionIpRMIRegistry,
                     numPuertoRMIRegistry2,
                     "objServicioGestionReferencia");
+            objRemoto3 = (ControladorGestorCredencialesUsuariosInt) UtilidadesRegistroC.obtenerObjRemoto(
+                    direccionIpRMIRegistry,
+                    numPuertoRMIRegistry1, "objServicioGestionCredencialesUsuario");
 
             ControladorCallbackImpl objRemoteCallBack = new ControladorCallbackImpl();
             objRemoto2.registrarReferencia(objRemoteCallBack);
+            
+            System.out.println("\n=============LOGIN DEL SISTEMA=============");
+            boolean accesado = false;
+            while (accesado == false) {
+                try {
+                    System.out.println("\nIngrese las credenciales asignadas: ");
+                    System.out.println("Username: ");
+                    String username = cliente.utilidades.UtilidadesConsola.leerCadena();
+                    System.out.println("Password: ");
+                    String password = cliente.utilidades.UtilidadesConsola.leerCadena();
+
+                    LoginDTO objLoginDTO = new LoginDTO(username, password);
+                    if (objRemoto3.iniciarSesion(objLoginDTO)) {
+                        accesado = true;
+                    }
+                } catch (RemoteException ex) {
+                    System.out.println("La operación no se pudo completar, intente nuevamente..." + ex.getMessage());
+                }
+            }
+
             Menu objMenu = new Menu(objRemoto1);
-            objMenu.validarCredenciales();
+            objMenu.ejecutarMenuPrincipal();
+            
         } catch (RemoteException e) {
         }
     }

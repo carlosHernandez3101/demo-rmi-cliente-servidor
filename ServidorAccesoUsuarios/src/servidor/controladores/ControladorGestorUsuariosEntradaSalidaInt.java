@@ -27,8 +27,7 @@ public interface ControladorGestorUsuariosEntradaSalidaInt extends Remote
      //cada definición del método debe especificar que puede lanzar la excepción java.rmi.RemoteException   
     
     public boolean eliminarUsuarioEntradaSalida(int identificacion) throws RemoteException;
-    
-    public boolean iniciarSesion(LoginDTO objLogin) throws RemoteException;
+  
 }
 
 

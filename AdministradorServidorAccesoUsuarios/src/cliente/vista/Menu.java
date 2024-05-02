@@ -22,29 +22,6 @@ public class Menu {
         this.scanner = new Scanner(System.in);  // InicializaciÃ³n del objeto Scanner
     }
 
-    public void validarCredenciales() {
-        System.out.println("\n=============LOGIN DEL SISTEMA=============");
-        boolean accesado = false;
-        while (accesado == false) {
-            try {
-                System.out.println("\nIngrese las credenciales asignadas: ");
-                System.out.println("Username: ");
-                String username = cliente.utilidades.UtilidadesConsola.leerCadena();
-                System.out.println("Password: ");
-                String password = cliente.utilidades.UtilidadesConsola.leerCadena();
-
-                LoginDTO objLoginDTO = new LoginDTO(username, password);
-                if (objRemoto.iniciarSesion(objLoginDTO)) {
-                    accesado = true;
-                }
-            } catch (RemoteException ex) {
-                System.out.println("La operación no se pudo completar, intente nuevamente..."+ex.getMessage());
-            }
-        }
-        
-        ejecutarMenuPrincipal();
-    }
-
     public void ejecutarMenuPrincipal() {
         int opcion = 0;
         do {

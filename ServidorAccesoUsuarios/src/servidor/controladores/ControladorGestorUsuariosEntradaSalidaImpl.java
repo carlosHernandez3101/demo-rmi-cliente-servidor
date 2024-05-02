@@ -5,7 +5,6 @@ package servidor.controladores;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import servidor.DTO.LoginDTO;
 import servidor.DTO.UsuarioEntradaSalidaDTO;
 import servidor.Repositorios.LoginRepositoryInt;
 import servidor.Repositorios.UsuariosRepositoryInt;
@@ -13,14 +12,11 @@ import servidor.Repositorios.UsuariosRepositoryInt;
 public class ControladorGestorUsuariosEntradaSalidaImpl extends UnicastRemoteObject implements ControladorGestorUsuariosEntradaSalidaInt{
     
     private final UsuariosRepositoryInt objUsuariosEntradaSalidaRepository;
-    private final LoginRepositoryInt objLoginRepositoryInt;
 
-    public ControladorGestorUsuariosEntradaSalidaImpl(UsuariosRepositoryInt objProductosRepository, 
-            LoginRepositoryInt objLoginRepositoryInt) throws RemoteException
+    public ControladorGestorUsuariosEntradaSalidaImpl(UsuariosRepositoryInt objProductosRepository) throws RemoteException
     {
         super(); //se asigna un puerto de escucha al OR
         this.objUsuariosEntradaSalidaRepository=objProductosRepository;
-        this.objLoginRepositoryInt = objLoginRepositoryInt;
     }    
 
     @Override
@@ -46,12 +42,6 @@ public class ControladorGestorUsuariosEntradaSalidaImpl extends UnicastRemoteObj
     @Override
     public boolean eliminarUsuarioEntradaSalida(int identificacion) throws RemoteException {
         return this.objUsuariosEntradaSalidaRepository.eliminarUsuariosEntradaSalida(identificacion);
-    }
-
-    @Override
-    public boolean iniciarSesion(LoginDTO objLogin) throws RemoteException {
-        return this.objLoginRepositoryInt.iniciarSesion(objLogin);
-    }
-    
+    }    
     
 }

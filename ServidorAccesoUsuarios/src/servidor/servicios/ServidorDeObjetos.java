@@ -11,6 +11,7 @@ import servidor.utilidades.UtilidadesConsola;
 import java.rmi.RemoteException;
 import servidor.Repositorios.LoginRepository;
 import servidor.Repositorios.UsuariosRepository;
+import servidor.controladores.ControladorGestorCredencialesUsuariosImpl;
 import servidor.controladores.ControladorGestorUsuariosEntradaSalidaImpl;
 
 public class ServidorDeObjetos
@@ -28,18 +29,20 @@ public class ServidorDeObjetos
      
         UsuariosRepository objRepository = new UsuariosRepository();
         LoginRepository objLoginRepository = new LoginRepository();
-        ControladorGestorUsuariosEntradaSalidaImpl objRemoto = new ControladorGestorUsuariosEntradaSalidaImpl(objRepository, objLoginRepository);//se leasigna el puerto de escucha del objeto remoto
+        
+        ControladorGestorUsuariosEntradaSalidaImpl objRemoto = new ControladorGestorUsuariosEntradaSalidaImpl(objRepository);//se leasigna el puerto de escucha del objeto remoto
+        ControladorGestorCredencialesUsuariosImpl objRemoto2 = new ControladorGestorCredencialesUsuariosImpl(objLoginRepository);
         
         try
         {
            UtilidadesRegistroS.arrancarNS(numPuertoRMIRegistry);
-           UtilidadesRegistroS.RegistrarObjetoRemoto(objRemoto, direccionIpRMIRegistry, numPuertoRMIRegistry, "objServicioGestionUsuariosEntradaSalida");            
+           UtilidadesRegistroS.RegistrarObjetoRemoto(objRemoto, direccionIpRMIRegistry, numPuertoRMIRegistry, "objServicioGestionUsuariosEntradaSalida");
+           UtilidadesRegistroS.RegistrarObjetoRemoto(objRemoto2, direccionIpRMIRegistry, numPuertoRMIRegistry, "objServicioGestionCredencialesUsuario");
            
         } catch (RemoteException e)
         {
             System.err.println("No fue posible Arrancar el NS o Registrar el objeto remoto" +  e.getMessage());
-        }
-        
+        }       
         
     }
 }
