@@ -2,19 +2,20 @@ package servidor.Repositorios;
 
 import java.util.LinkedList;
 import java.util.List;
+import servidor.DTO.UsuarioAccesadoDTO;
 
 public class EntradasRepositoryImpl implements EntradasRepositoryInt {
 
-    private final LinkedList<Integer> identificadores;
+    private final LinkedList<UsuarioAccesadoDTO> identificadores;
 
     public EntradasRepositoryImpl() {
         this.identificadores = new LinkedList();
     }
 
     @Override
-    public boolean registrarEntrada(int identificacion) {
+    public boolean registrarEntrada(UsuarioAccesadoDTO objUsuarioAccesadoDTO) {
         System.out.println("Registrando Entrada...");
-        return this.identificadores.add(identificacion);
+        return this.identificadores.add(objUsuarioAccesadoDTO);
     }
 
     @Override
@@ -22,7 +23,7 @@ public class EntradasRepositoryImpl implements EntradasRepositoryInt {
         System.out.println("Eliminando Entrada...");
         boolean bandera = false;
         for (int i = 0; i < this.identificadores.size(); i++) {
-            if (this.identificadores.get(i) == identificacion) {
+            if (this.identificadores.get(i).getIdentificacion() == identificacion) {
                 this.identificadores.remove(i);
                 bandera = true;
                 break;
@@ -35,7 +36,7 @@ public class EntradasRepositoryImpl implements EntradasRepositoryInt {
     public boolean existeRegistradaIdentificacion(int identificacion) {
         boolean bandera = false;
         for (int i = 0; i < this.identificadores.size(); i++) {
-            if (this.identificadores.get(i) == identificacion) {
+            if (this.identificadores.get(i).getIdentificacion() == identificacion) {
                 bandera = true;
                 break;
             }
@@ -44,7 +45,7 @@ public class EntradasRepositoryImpl implements EntradasRepositoryInt {
     }
 
     @Override
-    public List<Integer> listarUsuariosAccesados() {
+    public List<UsuarioAccesadoDTO> listarUsuariosAccesados() {
         return this.identificadores;
     }
 

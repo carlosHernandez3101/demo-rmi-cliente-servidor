@@ -2,9 +2,9 @@ package cliente.vista;
 
 import cliente.utilidades.UtilidadesConsola;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import servidor.DTO.UsuarioEntradaSalidaDTO;
+import servidor.DTO.UsuarioAccesadoDTO;
 import servidor.controladores.ControladorGestionarEntradaSalidaInt;
 
 public class Menu {
@@ -40,13 +40,16 @@ public class Menu {
         System.out.println("\n= = Listado de usuarios accesados = =");
         try {
 
-            List<UsuarioEntradaSalidaDTO> lstUsuarios = this.objRemoto.consultarUsuariosAccesados();
+            List<UsuarioAccesadoDTO> lstUsuarios = this.objRemoto.consultarUsuariosAccesados();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm a");
             if (lstUsuarios != null) {
-                for (UsuarioEntradaSalidaDTO objUsuarioDTO : lstUsuarios) {
-                    System.out.printf("\n\n%-10s  %-15s  %-10s \n", "ID", "Nombres", "Apellidos");
-                    System.out.printf("%-10s  %-15s  %-10s \n", objUsuarioDTO.getIdentificacion(), objUsuarioDTO.getNombre(), objUsuarioDTO.getApellidos());
+                for (UsuarioAccesadoDTO objUsuarioDTO : lstUsuarios) {
+                    System.out.printf("\n%-10s  %-15s  %-10s \n", "Codigo", "Hora Entrada", "Fecha Entrada");
+                    System.out.printf("%-10s  %-15s  %-10s \n", objUsuarioDTO.getIdentificacion(), objUsuarioDTO.getHoraEntrada().format(formatter), objUsuarioDTO.getFechaEntrada());
                 }
             }
+            
+            System.out.println("\nCantidad de usuarios al interior de las instalaciones: "+lstUsuarios.size());
         } catch (RemoteException e) {
             System.out.println("\nLa operación no se pudo completar, intente nuevamente...");
         }

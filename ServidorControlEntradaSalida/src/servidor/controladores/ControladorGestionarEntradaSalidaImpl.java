@@ -4,9 +4,9 @@ import cliente.DTO.EventoDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import servidor.DTO.UsuarioEntradaSalidaDTO;
+import servidor.DTO.UsuarioAccesadoDTO;
 import servidor.Repositorios.EntradasRepositoryInt;
 
 public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject implements ControladorGestionarEntradaSalidaInt{
@@ -32,7 +32,7 @@ public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject i
         int codigo = 0;
         EventoDTO objEventoDTO = null;
         UsuarioEntradaSalidaDTO objUsuarioDTO = objRemotoServidorUsuarios.consultarUsuarioEntradaSalida(identificacion);
-        
+        UsuarioAccesadoDTO objUsuarioAccesadoDTO;
         if (objUsuarioDTO == null) {
             codigo = 1;
             objEventoDTO = new EventoDTO("Entrada no exitosa, el usuario "+identificacion+" no existe", "Entrada");
@@ -44,7 +44,8 @@ public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject i
                 objEventoDTO = new EventoDTO("Entrada no exitosa, el usuario "+identificacion+" esta dentro", "Entrada");
             } else {
                 //Si el usuario existe y no esta adentro se retorna 3
-                objEntradasRepository.registrarEntrada(identificacion);
+                objUsuarioAccesadoDTO = new UsuarioAccesadoDTO(identificacion);
+                objEntradasRepository.registrarEntrada(objUsuarioAccesadoDTO);
                 codigo = 3;
                 objEventoDTO = new EventoDTO("Entrada exitosa del usuario "+identificacion, "Entrada");
             }            
@@ -82,17 +83,11 @@ public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject i
     }    
 
     @Override
-    public List<UsuarioEntradaSalidaDTO> consultarUsuariosAccesados() throws RemoteException {
-        ArrayList<UsuarioEntradaSalidaDTO> lstUsuariosAccesados = new ArrayList();
+    public List<UsuarioAccesadoDTO> consultarUsuariosAccesados() throws RemoteException {
         
-        List<Integer> identificadores = this.objEntradasRepository.listarUsuariosAccesados();
+        List<UsuarioAccesadoDTO> identificadores = this.objEntradasRepository.listarUsuariosAccesados();
         
-        UsuarioEntradaSalidaDTO usuario;
-        for (int i = 0; i < identificadores.size(); i++) {
-            usuario = objRemotoServidorUsuarios.consultarUsuarioEntradaSalida(identificadores.get(i));
-            lstUsuariosAccesados.add(usuario);
-        }
-        return lstUsuariosAccesados;
+        return identificadores;
     }
     
 }
