@@ -7,9 +7,6 @@ import java.util.List;
 import servidor.DTO.UsuarioEntradaSalidaDTO;
 import servidor.controladores.ControladorGestorUsuariosEntradaSalidaInt;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import servidor.DTO.LoginDTO;
 import servidor.DTO.UsuarioEntradaSalidaDTO.Rol;
 
 public class Menu {
@@ -47,10 +44,10 @@ public class Menu {
                     Opcion4();
                     break;
                 case 5:
-                    System.out.println("Salir...");
+                    System.out.println("\nSaliendo...");
                     break;
                 default:
-                    System.out.println("Opción incorrecta");
+                    System.out.println("\nOpción incorrecta");
             }
         } while (opcion != 5);
     }
@@ -123,18 +120,18 @@ public class Menu {
             UsuarioEntradaSalidaDTO objUsuarioEntradaSalida = objRemoto.consultarUsuarioEntradaSalida(codigo);
 
             if (objUsuarioEntradaSalida != null) {
-                System.out.println("Código: " + objUsuarioEntradaSalida.getIdentificacion());
+                System.out.println("\nCódigo: " + objUsuarioEntradaSalida.getIdentificacion());
                 System.out.println("Nombre: " + objUsuarioEntradaSalida.getNombre());
                 System.out.println("Apellidos: " + objUsuarioEntradaSalida.getApellidos());
                 System.out.println("Rol: " + objUsuarioEntradaSalida.getRol());
                 System.out.println("Fecha de Registro: " + objUsuarioEntradaSalida.getFechaRegistro());
             } else {
-                System.out.println("No se encontró ningún usuario con el código proporcionado.");
+                System.out.println("\nNo se encontró ningún usuario con el código proporcionado.");
             }
         } catch (NumberFormatException e) {
-            System.out.println("El código ingresado no es válido. Por favor, ingrese un número.");
+            System.out.println("\nEl código ingresado no es válido. Por favor, ingrese un número.");
         } catch (RemoteException e) {
-            System.out.println("La operación no se pudo completar, intente nuevamente...");
+            System.out.println("\nLa operación no se pudo completar, intente nuevamente...");
             System.out.println("Excepción generada: " + e.getMessage());
         }
     }
@@ -150,26 +147,26 @@ public class Menu {
             if (objUsuarioEntradaSalida != null) {
                 String respuesta;
                 do {
-                    System.out.print("¿Desea eliminar al usuario con identificación " + codigo + "? (s/n): ");
+                    System.out.print("\n¿Desea eliminar al usuario con identificación " + codigo + "? (s/n): ");
                     respuesta = scanner.nextLine().trim().toLowerCase();
                     if (!respuesta.equals("s") && !respuesta.equals("n")) {
-                        System.out.println("Respuesta inválida. Por favor, ingrese 's' para si o 'n' para no.");
+                        System.out.println("\nRespuesta inválida. Por favor, ingrese 's' para si o 'n' para no.");
                     }
                 } while (!respuesta.equals("s") && !respuesta.equals("n"));
 
                 if (respuesta.equals("s")) {
                     objRemoto.eliminarUsuarioEntradaSalida(codigo);
-                    System.out.println("Usuario eliminado exitosamente.");
+                    System.out.println("\nUsuario eliminado exitosamente.");
                 } else {
-                    System.out.println("Operaci?n cancelada.");
+                    System.out.println("\nOperaci?n cancelada.");
                 }
             } else {
-                System.out.println("No se encontr? un usuario con la identificaci?n " + codigo + ".");
+                System.out.println("\nNo se encontr? un usuario con la identificaci?n " + codigo + ".");
             }
         } catch (NumberFormatException e) {
-            System.out.println("El c?digo ingresado no es v?lido. Por favor, ingrese un n?mero.");
+            System.out.println("\nEl c?digo ingresado no es v?lido. Por favor, ingrese un n?mero.");
         } catch (RemoteException e) {
-            System.out.println("La operaci?n no se pudo completar, intente nuevamente...");
+            System.out.println("\nLa operaci?n no se pudo completar, intente nuevamente...");
             System.out.println("Excepci?n generada: " + e.getMessage());
         }
     }

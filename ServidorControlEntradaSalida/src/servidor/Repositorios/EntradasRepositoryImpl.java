@@ -1,6 +1,7 @@
 package servidor.Repositorios;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class EntradasRepositoryImpl implements EntradasRepositoryInt {
 
@@ -40,6 +41,11 @@ public class EntradasRepositoryImpl implements EntradasRepositoryInt {
             }
         }
         return bandera;
+    }
+
+    @Override
+    public List<Integer> listarUsuariosAccesados() {
+        return this.identificadores;
     }
 
 }

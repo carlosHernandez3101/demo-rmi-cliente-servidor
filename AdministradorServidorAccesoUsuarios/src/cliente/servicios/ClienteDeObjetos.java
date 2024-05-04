@@ -65,6 +65,7 @@ public class ClienteDeObjetos {
             objMenu.ejecutarMenuPrincipal();
             
         } catch (RemoteException e) {
+            System.out.println(""+e.getMessage());
         }
     }
 }

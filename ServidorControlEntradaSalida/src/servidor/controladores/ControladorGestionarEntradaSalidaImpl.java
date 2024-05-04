@@ -3,6 +3,9 @@ package servidor.controladores;
 import cliente.DTO.EventoDTO;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import servidor.DTO.UsuarioEntradaSalidaDTO;
 import servidor.Repositorios.EntradasRepositoryInt;
 
@@ -77,5 +80,19 @@ public class ControladorGestionarEntradaSalidaImpl extends UnicastRemoteObject i
         this.objRemoto2.notificar(objEventoDTO, objUsuarioDTO);
         return codigo;
     }    
+
+    @Override
+    public List<UsuarioEntradaSalidaDTO> consultarUsuariosAccesados() throws RemoteException {
+        ArrayList<UsuarioEntradaSalidaDTO> lstUsuariosAccesados = new ArrayList();
+        
+        List<Integer> identificadores = this.objEntradasRepository.listarUsuariosAccesados();
+        
+        UsuarioEntradaSalidaDTO usuario;
+        for (int i = 0; i < identificadores.size(); i++) {
+            usuario = objRemotoServidorUsuarios.consultarUsuarioEntradaSalida(identificadores.get(i));
+            lstUsuariosAccesados.add(usuario);
+        }
+        return lstUsuariosAccesados;
+    }
     
 }
