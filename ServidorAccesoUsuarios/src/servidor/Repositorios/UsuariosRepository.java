@@ -17,7 +17,7 @@ public class UsuariosRepository implements UsuariosRepositoryInt
     @Override
     public boolean registrarUsuarioEntradaSalida(UsuarioEntradaSalidaDTO objUsuarioES)
     {
-        System.out.println("\nIniciando proceso de registro...");
+        System.out.println("Registrando Usuario...");
         boolean bandera = false;
         
         if(this.misUsuariosEntradaSalida.size() < 5)
@@ -33,7 +33,7 @@ public class UsuariosRepository implements UsuariosRepositoryInt
     @Override
     public int consultarCantidadUsuariosEntradaSalida()
     {
-        System.out.println("\nConsultando cantidad de usuarios...");
+        System.out.println("Consultando numero de usuarios...");
         return this.misUsuariosEntradaSalida.size();
     }
 
@@ -41,7 +41,7 @@ public class UsuariosRepository implements UsuariosRepositoryInt
     public UsuarioEntradaSalidaDTO consultarUsuarioEntradaSalida(int identificacion)
     {
         UsuarioEntradaSalidaDTO objUsuarioES = null;
-        System.out.println("\nEntrando a Consultar Entrada Salida...");
+        System.out.println("Consultando usuario...");
         for (int i = 0; i < this.misUsuariosEntradaSalida.size(); i++) {
             if(this.misUsuariosEntradaSalida.get(i).getIdentificacion() == identificacion)
             {
@@ -54,12 +54,13 @@ public class UsuariosRepository implements UsuariosRepositoryInt
     
     public List<UsuarioEntradaSalidaDTO> listarUsuariosEntradaSalida()
     {
+        System.out.println("Obteniendo listado de usuarios...");
         return this.misUsuariosEntradaSalida;
     }
 
     @Override
     public boolean eliminarUsuariosEntradaSalida(int identificacion) {
-        System.out.println("\nEliminando registro...");
+        System.out.println("Eliminando registro...");
         // Recorre la lista de usuarios
         for (int i = 0; i < this.misUsuariosEntradaSalida.size(); i++) {
             // Comprueba si el usuario actual tiene la identificaci?n dada
@@ -71,7 +72,6 @@ public class UsuariosRepository implements UsuariosRepositoryInt
                 return true;
             }
         }
-        System.out.println("Proceso de eliminacion cancelado.");
         return false;
     }
 }

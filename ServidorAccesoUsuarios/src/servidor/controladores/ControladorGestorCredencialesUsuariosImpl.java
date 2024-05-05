@@ -24,6 +24,7 @@ public class ControladorGestorCredencialesUsuariosImpl extends UnicastRemoteObje
 
     @Override
     public boolean iniciarSesion(LoginDTO objLogin) throws RemoteException {
+        System.out.println("\nIniciando proceso de validacion de credenciales..." );
         return this.objLoginRepositoryInt.iniciarSesion(objLogin);
     }
      

@@ -47,14 +47,14 @@ public class ClienteDeObjetos {
             while (accesado == false) {
                 try {
                     System.out.println("\nIngrese las credenciales asignadas: ");
-                    System.out.println("Username: ");
-                    String username = cliente.utilidades.UtilidadesConsola.leerCadena();
-                    System.out.println("Password: ");
-                    String password = cliente.utilidades.UtilidadesConsola.leerCadena();
+                    String username = leerCredencial("Username: ");
+                    String password = leerCredencial("Password: ");
 
                     LoginDTO objLoginDTO = new LoginDTO(username, password);
                     if (objRemoto3.iniciarSesion(objLoginDTO)) {
                         accesado = true;
+                    }else{
+                        System.out.println("\nLas credenciales ingresadas son invalidas.");
                     }
                 } catch (RemoteException ex) {
                     System.out.println("La operación no se pudo completar, intente nuevamente..." + ex.getMessage());
@@ -67,5 +67,20 @@ public class ClienteDeObjetos {
         } catch (RemoteException e) {
             System.out.println(""+e.getMessage());
         }
+    }
+    
+    private static String leerCredencial(String msj){
+        boolean bandera = false;
+        String credencial;
+        do {
+            System.out.println(msj);
+            credencial = cliente.utilidades.UtilidadesConsola.leerCadena();
+            bandera = (credencial.length() >= 8 && credencial.length() <= 15);
+            if (bandera == false) {
+                System.out.println("\nInvalido. La credencial debe contener entre 8 y 15 caracteres. Intente nuevamente.\n");
+            }
+        } while (bandera == false);
+        return credencial;
+        
     }
 }

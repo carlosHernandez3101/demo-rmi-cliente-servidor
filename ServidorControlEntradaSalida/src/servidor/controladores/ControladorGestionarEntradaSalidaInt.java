@@ -17,6 +17,8 @@ public interface ControladorGestionarEntradaSalidaInt extends Remote
     //Definicion del segundo método remoto
     public int registrarSalida(int identificacion) throws RemoteException;
     
+    public String generarTicket(int identificacion, String accion) throws RemoteException;
+    
     public List<UsuarioAccesadoDTO> consultarUsuariosAccesados() throws RemoteException;
 }
 

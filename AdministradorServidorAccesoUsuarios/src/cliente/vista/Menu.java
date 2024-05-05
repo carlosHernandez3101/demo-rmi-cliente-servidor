@@ -52,11 +52,40 @@ public class Menu {
         } while (opcion != 5);
     }
 
+    private int leerIdentificacion(String msj) {
+        boolean idValido = false;
+        int identificacion;
+        String id;
+        do {
+            System.out.println(msj);
+            identificacion = UtilidadesConsola.leerEntero();
+            id = String.valueOf(identificacion);
+            idValido = (id.length() == 8);
+            if (idValido == false) {
+                System.out.println("\nInvalido. El codigo debe ser de 8 caracteres. Intente nuevamente.\n");
+            }
+        } while (idValido == false);
+
+        return identificacion;
+    }
+
     private void Opcion1() {
+        UsuarioEntradaSalidaDTO usuarioID;
+        boolean existeUsuarioConID;
+        int codigo;
         System.out.println("\n= = Registro de Usuario = =");
         try {
-            System.out.println("Ingrese el codigo: ");
-            int codigo = UtilidadesConsola.leerEntero();
+            do {
+                codigo = leerIdentificacion("Ingrese el codigo: ");
+                usuarioID = objRemoto.consultarUsuarioEntradaSalida(codigo);
+                if (usuarioID != null) {
+                    System.out.println("\nInvalido. El codigo ya se encuentra registrado. Intente nuevamente.\n");
+                    existeUsuarioConID = true;
+                } else {
+                    existeUsuarioConID = false;
+                }
+            } while (existeUsuarioConID == true);
+
             System.out.println("Ingrese el nombre: ");
             String nombre = UtilidadesConsola.leerCadena();
             System.out.println("Ingrese los apellidos: ");
@@ -79,12 +108,12 @@ public class Menu {
             UsuarioEntradaSalidaDTO objUsuarioEntradaSalida = new UsuarioEntradaSalidaDTO(codigo, nombre, apellidos, rol, fechaRegistro);
             boolean bandera = objRemoto.registrarUsuarioEntradaSalida(objUsuarioEntradaSalida); // InvocaciÃ³n del mÃ©todo remoto
             if (bandera) {
-                System.out.println("Registro realizado satisfactoriamente...");
+                System.out.println("\nRegistro realizado satisfactoriamente...");
             } else {
-                System.out.println("No se pudo realizar el registro...");
+                System.out.println("\nNo se pudo realizar el registro...");
             }
         } catch (RemoteException e) {
-            System.out.println("La operación no se pudo completar, intente nuevamente...");
+            System.out.println("\nLa operación no se pudo completar, intente nuevamente...");
         }
     }
 
@@ -93,7 +122,7 @@ public class Menu {
         try {
             List<UsuarioEntradaSalidaDTO> lstUsuarios = objRemoto.listarUsuariosEntradaSalida();
             if (lstUsuarios.isEmpty()) {
-                System.out.println("No hay usuarios registrados.");
+                System.out.println("\nNo hay usuarios registrados.");
             } else {
                 System.out.println("------------------------------");
                 for (UsuarioEntradaSalidaDTO objUsuarioEntradaSalida : lstUsuarios) {
@@ -104,10 +133,10 @@ public class Menu {
                     System.out.println("Fecha de Registro: " + objUsuarioEntradaSalida.getFechaRegistro());
                     System.out.println("------------------------------");
                 }
-                System.out.println("Cantidad de Usuarios: " + lstUsuarios.size());
+                System.out.println("\nCantidad de Usuarios: " + lstUsuarios.size());
             }
         } catch (RemoteException e) {
-            System.out.println("La operación no se pudo completar, intente nuevamente...");
+            System.out.println("\nLa operación no se pudo completar, intente nuevamente...");
             System.out.println("Excepción generada: " + e.getMessage());
         }
     }
@@ -115,8 +144,7 @@ public class Menu {
     private void Opcion3() {
         System.out.println("\n= = Consultar Usuario = =");
         try {
-            System.out.print("Ingrese el código del usuario a consultar: ");
-            int codigo = UtilidadesConsola.leerEntero();
+            int codigo = leerIdentificacion("Ingrese el código del usuario a consultar: ");
             UsuarioEntradaSalidaDTO objUsuarioEntradaSalida = objRemoto.consultarUsuarioEntradaSalida(codigo);
 
             if (objUsuarioEntradaSalida != null) {
@@ -139,9 +167,8 @@ public class Menu {
     private void Opcion4() {
         Scanner scanner = new Scanner(System.in); // Crea un objeto Scanner para leer la entrada del usuario
         System.out.println("\n= = Eliminación de Usuario = =");
-        try {
-            System.out.print("Ingrese el código del usuario a eliminar: ");
-            int codigo = UtilidadesConsola.leerEntero();
+        try {           
+            int codigo = leerIdentificacion("Ingrese el código del usuario a eliminar: ");
             UsuarioEntradaSalidaDTO objUsuarioEntradaSalida = objRemoto.consultarUsuarioEntradaSalida(codigo);
 
             if (objUsuarioEntradaSalida != null) {

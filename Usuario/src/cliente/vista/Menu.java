@@ -36,13 +36,29 @@ public class Menu {
             }
         } while (opcion != 3);
     }
+    
+    private int leerIdentificacion(String msj) {
+        boolean idValido = false;
+        int identificacion;
+        String id;
+        do {
+            System.out.println(msj);
+            identificacion = UtilidadesConsola.leerEntero();
+            id = String.valueOf(identificacion);
+            idValido = (id.length() == 8);
+            if (idValido == false) {
+                System.out.println("\nInvalido. El codigo debe ser de 8 caracteres. Intente nuevamente.\n");
+            }
+        } while (idValido == false);
+
+        return identificacion;
+    }
 
     private void Opcion1() {
         System.out.println("\n= = Entrada = =");
         try {
             int identificacion;
-            System.out.println("Digite la identificación: ");
-            identificacion = UtilidadesConsola.leerEntero();
+            identificacion = leerIdentificacion("Digite la identificación: ");
             int resultado = objRemoto.registrarEntrada(identificacion); //InvocaciÃ³n mÃ©todo remoto
             switch (resultado) {
                 case 1:
@@ -52,7 +68,8 @@ public class Menu {
                     System.out.println("\nError, el usuario existe y está dentro.");
                     break;
                 case 3:
-                    System.out.println("\nEntrada autorizada y registrada.");
+                    System.out.println("\n    Acceso concedido.\n");
+                    System.out.println(objRemoto.generarTicket(identificacion, "e"));
                     break;
             }
         } catch (RemoteException e) {
@@ -64,8 +81,7 @@ public class Menu {
         System.out.println("\n= = Salida = =");
         try {
             int identificacion;
-            System.out.println("Digite la identificación: ");
-            identificacion = UtilidadesConsola.leerEntero();
+            identificacion = leerIdentificacion("Digite la identificación: ");
             int resultado = objRemoto.registrarSalida(identificacion); //InvocaciÃ³n mÃ©todo remoto
              switch (resultado) {
                 case 1:
@@ -75,7 +91,8 @@ public class Menu {
                     System.out.println("\nError, el usuario existe y no está dentro.");
                     break;
                 case 3:
-                    System.out.println("\nSalida autorizada y registrada.");
+                    System.out.println("\n    Salida concedida.\n");
+                    System.out.println(objRemoto.generarTicket(identificacion, "s"));
                     break;
             }
         } catch (RemoteException e) {

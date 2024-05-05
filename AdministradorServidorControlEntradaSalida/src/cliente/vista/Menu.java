@@ -4,6 +4,7 @@ import cliente.utilidades.UtilidadesConsola;
 import java.rmi.RemoteException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import servidor.DTO.UsuarioAccesadoDTO;
 import servidor.controladores.ControladorGestionarEntradaSalidaInt;
 
@@ -42,10 +43,11 @@ public class Menu {
 
             List<UsuarioAccesadoDTO> lstUsuarios = this.objRemoto.consultarUsuariosAccesados();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm a");
+            DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
             if (lstUsuarios != null) {
-                for (UsuarioAccesadoDTO objUsuarioDTO : lstUsuarios) {
-                    System.out.printf("\n%-10s  %-15s  %-10s \n", "Codigo", "Hora Entrada", "Fecha Entrada");
-                    System.out.printf("%-10s  %-15s  %-10s \n", objUsuarioDTO.getIdentificacion(), objUsuarioDTO.getHoraEntrada().format(formatter), objUsuarioDTO.getFechaEntrada());
+                System.out.printf("\n%-10s  %-15s  %-10s \n", "Codigo", "Hora Entrada", "Fecha Entrada");
+                for (UsuarioAccesadoDTO objUsuarioDTO : lstUsuarios) {                  
+                    System.out.printf("%-10s  %-15s  %-10s \n", objUsuarioDTO.getIdentificacion(), objUsuarioDTO.getHoraEntrada().format(formatter), objUsuarioDTO.getFechaEntrada().format(formatterFecha));
                 }
             }
             

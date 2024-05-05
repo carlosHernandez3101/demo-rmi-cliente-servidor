@@ -21,6 +21,7 @@ public class ControladorCallbackImpl extends UnicastRemoteObject implements Cont
 
     @Override
     public void notificar(EventoDTO objEvento, UsuarioEntradaSalidaDTO objUsuarioDTO) throws RemoteException {
+        System.out.printf("\n%-10s ","NUEVA NOTIFICACION");
         if (objUsuarioDTO != null) {
             System.out.printf("\n\n%-10s  %-15s  %-10s \n", "ID", "Nombres", "Apellidos");
             System.out.printf("%-10s  %-15s  %-10s \n", objUsuarioDTO.getIdentificacion(), objUsuarioDTO.getNombre(), objUsuarioDTO.getApellidos());

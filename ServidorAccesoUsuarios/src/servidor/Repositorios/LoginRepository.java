@@ -11,18 +11,18 @@ public class LoginRepository implements LoginRepositoryInt
     public LoginRepository()
     {        
         this.lstLogin = new ArrayList();
-        this.lstLogin.add(new LoginDTO("admin","12345678"));
+        this.lstLogin.add(new LoginDTO("admin123","12345678"));
     }
 
     @Override
     public boolean iniciarSesion(LoginDTO objLogin) {
         boolean accesado = false;
-        System.out.println("Iniciando proceso de validacion de credenciales..."+lstLogin.size() );
+        System.out.println("Validando credenciales..." );
         for (int i = 0; i < lstLogin.size(); i++) {
-            if(this.lstLogin.get(i).getUsername().equals(objLogin.getUsername()) && this.lstLogin.get(i).getContraseña().equals(objLogin.getContraseña())){
+            if(this.lstLogin.get(i).getUsername().equals(objLogin.getUsername()) && this.lstLogin.get(i).getContraseña().equals(objLogin.getContraseña())){                
                 accesado = true;
             }
-        }
+        }        
         return accesado;
     }
 }

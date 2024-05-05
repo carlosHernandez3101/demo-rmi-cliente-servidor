@@ -14,13 +14,11 @@ public class EntradasRepositoryImpl implements EntradasRepositoryInt {
 
     @Override
     public boolean registrarEntrada(UsuarioAccesadoDTO objUsuarioAccesadoDTO) {
-        System.out.println("Registrando Entrada...");
         return this.identificadores.add(objUsuarioAccesadoDTO);
     }
 
     @Override
     public boolean eliminarEntrada(int identificacion) {
-        System.out.println("Eliminando Entrada...");
         boolean bandera = false;
         for (int i = 0; i < this.identificadores.size(); i++) {
             if (this.identificadores.get(i).getIdentificacion() == identificacion) {

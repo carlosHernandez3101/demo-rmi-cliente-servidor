@@ -21,26 +21,31 @@ public class ControladorGestorUsuariosEntradaSalidaImpl extends UnicastRemoteObj
 
     @Override
     public boolean registrarUsuarioEntradaSalida(UsuarioEntradaSalidaDTO objProducto) throws RemoteException {
+        System.out.println("\nIniciando proceso de registro de usuario...");
         return this.objUsuariosEntradaSalidaRepository.registrarUsuarioEntradaSalida(objProducto);
     }
 
     @Override
     public int consultarCantidadUsuariosEntradaSalida() throws RemoteException {
+        System.out.println("\nIniciando proceso de consulta de numero de usuarios...");
         return this.objUsuariosEntradaSalidaRepository.consultarCantidadUsuariosEntradaSalida();
     }
 
     @Override
     public UsuarioEntradaSalidaDTO consultarUsuarioEntradaSalida(int identificacion) throws RemoteException {
+        System.out.println("\nIniciando proceso de consulta de usuario...");
         return this.objUsuariosEntradaSalidaRepository.consultarUsuarioEntradaSalida(identificacion);
     }
 
     @Override
     public List<UsuarioEntradaSalidaDTO> listarUsuariosEntradaSalida() throws RemoteException {
+        System.out.println("\nIniciando proceso de obtencion de listado de usuarios...");
         return this.objUsuariosEntradaSalidaRepository.listarUsuariosEntradaSalida();
     }
 
     @Override
     public boolean eliminarUsuarioEntradaSalida(int identificacion) throws RemoteException {
+        System.out.println("\nIniciando proceso de eliminacion de usuario...");
         return this.objUsuariosEntradaSalidaRepository.eliminarUsuariosEntradaSalida(identificacion);
     }    
     

@@ -20,10 +20,12 @@ public class ControladorGestorReferenciasRemotasAdministradorImpl extends Unicas
     
     @Override
     public boolean registrarReferencia(ControladorCallbackInt referencia) throws RemoteException {
+        System.out.println("\nProceso de registro de referencia iniciado...");
         return this.referencias.add(referencia);
     }
     
     public void notificar(EventoDTO objEvento, UsuarioEntradaSalidaDTO objUsuarioDTO){
+        System.out.println("\nProceso de notificacion iniciado...");
         referencias.forEach(
         ref-> {
             try {
